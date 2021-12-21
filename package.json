@@ -1,0 +1,29 @@
+{
+  "name": "typegraph",
+  "version": "0.0.1",
+  "description": "Backend server version de desarollo elaborada con el stack MEN+G para la parte backend el proposito sera que esta aplicacion pueda hacer tres funciones incialmente que sera registrar, autenticar y devolver datos de los usuariosque se introduzcan en la base de datos con MONGO el query esta elaborado con Graphql en TypeScript",
+  "main": "build/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Graphql",
+    "TypeScript",
+    "Mongo",
+    "Express",
+    "Stripe",
+    "Cloudinary",
+    "NodeJS",
+    "Zeit",
+    "Now"
+  ],
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "author": "Katch Vidal <katchvidal@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.5.4"
+  }
+}

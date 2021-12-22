@@ -1,0 +1,10 @@
+"Input User Field Requirement"
+input UserInput {
+  name: String
+  lastname: String
+  email: String!
+  password: String!
+  create_At: String
+  birthday: String
+  role: Rol = CLIENT
+}

@@ -1,0 +1,6 @@
+"Querys"
+type Query {
+  Hello: String
+  users: ResultUsers
+  me: ResultUser
+}

@@ -1,9 +1,12 @@
 import "graphql-import-node";
 import { GraphQLSchema } from "graphql";
 import { makeExecutableSchema } from "graphql-tools";
-import typeDefs from "./schema.graphql";
 import resolvers from "../resolvers";
+import { mergeTypeDefs } from "@graphql-tools/merge";
+import { loadFilesSync } from "@graphql-tools/load-files";
 
+const loadedFiles = loadFilesSync(`${__dirname}/**/*.graphql`);
+const typeDefs = mergeTypeDefs(loadedFiles);
 const schema: GraphQLSchema = makeExecutableSchema({
   typeDefs,
   resolvers,

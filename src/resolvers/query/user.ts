@@ -1,8 +1,8 @@
-import { COLLECTIONS, MESSAGE } from "./../config/constants";
+import { COLLECTIONS, MESSAGE } from "../../config/constants";
 import { IResolvers } from "@graphql-tools/utils";
-import JWT from "../lib/jsonwebtoken";
+import JWT from "../../lib/jsonwebtoken";
 
-const QueryResolvers: IResolvers = {
+const UserQueryResolvers: IResolvers = {
   Query: {
     Hello(root, args, context, info) {
       //console.log(root);
@@ -34,6 +34,8 @@ const QueryResolvers: IResolvers = {
     },
 
     async me(_, __, { token }) {
+      //console.log(token);
+
       let info = new JWT().verify(token);
       if (info === MESSAGE.TOKEN_VERIFICATION_FAILED) {
         return {
@@ -51,4 +53,4 @@ const QueryResolvers: IResolvers = {
   },
 };
 
-export default QueryResolvers;
+export default UserQueryResolvers;

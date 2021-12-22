@@ -1,0 +1,5 @@
+"Interface How look a Request Result"
+interface Result {
+  status: Boolean!
+  message: String!
+}

@@ -1,0 +1,13 @@
+"Resultado que devuelve un User"
+type ResultUser implements Result {
+  message: String!
+  status: Boolean!
+  user: User
+}
+
+"Resultado que devuelve [User]"
+type ResultUsers implements Result {
+  users: [User]
+  status: Boolean!
+  message: String!
+}

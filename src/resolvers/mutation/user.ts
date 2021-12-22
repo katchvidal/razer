@@ -1,13 +1,14 @@
-import { COLLECTIONS, EXPIRETIME } from "./../config/constants";
+import { AssignDocumentID, FindOneElement } from "./../../lib/MongoOperation";
+import { COLLECTIONS } from "../../config/constants";
 import { IResolvers } from "@graphql-tools/utils";
-import JWT from "../lib/jsonwebtoken";
+import JWT from "../../lib/jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const MutationResolvers: IResolvers = {
+const UserMutationResolvers: IResolvers = {
   Mutation: {
     async CreateUser(_, { input }, { MongoDB }) {
       try {
-        const UserExist = await MongoDB.collection(COLLECTIONS.USERS).findOne({
+        const UserExist = await FindOneElement(MongoDB, COLLECTIONS.USERS, {
           email: input.email,
         });
 
@@ -18,17 +19,8 @@ const MutationResolvers: IResolvers = {
             input: null,
           };
         }
-        const LastUser = await MongoDB.collection(COLLECTIONS.USERS)
-          .find()
-          .limit(1)
-          .sort({ create_At: -1 })
-          .toArray();
 
-        if (LastUser.length === 0) {
-          input.id = 1;
-        } else {
-          input.id = LastUser[0].id + 1;
-        }
+        input.id = await AssignDocumentID(MongoDB, COLLECTIONS.USERS);
 
         input.create_At = new Date().toISOString();
 
@@ -54,10 +46,15 @@ const MutationResolvers: IResolvers = {
     },
 
     async LoginUser(_, { input }, { MongoDB }) {
+      const { email } = input;
       try {
         const user = await MongoDB.collection(COLLECTIONS.USERS).findOne({
           email: input.email,
         });
+
+        /* const user = await FindOneElement(MongoDB, COLLECTIONS.USERS, {
+          email,
+        });*/
 
         if (!user) {
           return {
@@ -81,10 +78,9 @@ const MutationResolvers: IResolvers = {
           status: true,
           message: PasswordValid ? "ALL LOOK OK" : "Password / Email not valid",
           user: PasswordValid ? user : null,
-          token: PasswordValid
-            ? new JWT().sign({ user }, EXPIRETIME.M20)
-            : null,
+          token: PasswordValid ? new JWT().sign({ user }) : null,
         };
+        user;
       } catch (error) {
         console.log(error);
         return {
@@ -98,4 +94,4 @@ const MutationResolvers: IResolvers = {
   },
 };
 
-export default MutationResolvers;
+export default UserMutationResolvers;

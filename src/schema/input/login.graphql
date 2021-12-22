@@ -1,0 +1,5 @@
+"Digitar Login"
+input LoginInput {
+  email: String!
+  password: String!
+}

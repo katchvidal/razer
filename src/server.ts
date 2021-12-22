@@ -1,3 +1,4 @@
+import { IContext } from "./interface/context.interface";
 import express from "express";
 import cors from "cors";
 import compression from "compression";
@@ -22,7 +23,12 @@ async function init() {
 
   const database = new MONGODATABASE();
   const MongoDB = await database.init();
-  const context = { MongoDB };
+
+  const context = async ({ req, connection }: IContext) => {
+    const token = req ? req.headers.authorization : connection.authorization;
+
+    return { token, MongoDB };
+  };
 
   const server = new ApolloServer({
     schema,

@@ -33,17 +33,27 @@ interface Result {
   message: String!
 }
 
-type ResultUser implements Result {
+"Resultado que devuelve [User]"
+type ResultUsers implements Result {
   users: [User]
   status: Boolean!
   message: String!
 }
 
+"Resultado que devuelve un User"
+type ResultUser implements Result {
+  message: String!
+  status: Boolean!
+  user: User
+}
+
+"Digitar Login"
 input LoginInput {
   email: String!
   password: String!
 }
 
+"Resultado de Login"
 type ResultLogin implements Result {
   token: String
   user: User
@@ -54,11 +64,12 @@ type ResultLogin implements Result {
 "Querys"
 type Query {
   Hello: String
-  users: ResultUser
+  users: ResultUsers
+  me: ResultUser
 }
 
 "Mutation"
 type Mutation {
-  CreateUser(input: UserInput!): User
+  CreateUser(input: UserInput!): ResultUser
   LoginUser(input: LoginInput): ResultLogin
 }

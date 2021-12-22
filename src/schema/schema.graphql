@@ -1,0 +1,64 @@
+"Root Type User / How Look a User"
+type User {
+  id: ID
+  name: String
+  lastname: String
+  email: String
+  password: String
+  create_At: String
+  birthday: String
+  role: Rol
+}
+
+"Input User Field Requirement"
+input UserInput {
+  name: String
+  lastname: String
+  email: String!
+  password: String!
+  create_At: String
+  birthday: String
+  role: Rol = CLIENT
+}
+
+"Choice Field"
+enum Rol {
+  CLIENT
+  ADMIN
+}
+
+"Interface How look a Request Result"
+interface Result {
+  status: Boolean!
+  message: String!
+}
+
+type ResultUser implements Result {
+  users: [User]
+  status: Boolean!
+  message: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type ResultLogin implements Result {
+  token: String
+  user: User
+  message: String!
+  status: Boolean!
+}
+
+"Querys"
+type Query {
+  Hello: String
+  users: ResultUser
+}
+
+"Mutation"
+type Mutation {
+  CreateUser(input: UserInput!): User
+  LoginUser(input: LoginInput): ResultLogin
+}

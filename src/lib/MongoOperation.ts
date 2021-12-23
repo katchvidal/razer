@@ -21,10 +21,10 @@ export const AssignDocumentID = async (Mongo: Db, collection: string) => {
 
 /**
  *
- * @param Mongo
- * @param collection
- * @param filter
- * @returns
+ * @param Mongo -> MongoDB Connexion
+ * @param collection -> Collecion
+ * @param filter -> { elemento : elemento }
+ * @returns -> Retorna elemento buscado
  */
 export const FindOneElement = async (
   Mongo: Db,
@@ -32,4 +32,49 @@ export const FindOneElement = async (
   filter: object
 ) => {
   return Mongo.collection(collection).findOne(filter);
+};
+
+/**
+ *
+ * @param Mongo
+ * @param collection
+ * @param element
+ * @returns
+ */
+export const InserOneElement = async (
+  Mongo: Db,
+  collection: string,
+  element: object
+) => {
+  return Mongo.collection(collection).insertOne(element);
+};
+
+/**
+ *
+ * @param Mongo
+ * @param collection
+ * @param elements
+ * @returns
+ */
+export const InserManyElement = async (
+  Mongo: Db,
+  collection: string,
+  elements: Array<object>
+) => {
+  return await Mongo.collection(collection).insertMany(elements);
+};
+
+/**
+ *
+ * @param Mongo
+ * @param collection
+ * @param filter
+ * @returns
+ */
+export const FindElements = async (
+  Mongo: Db,
+  collection: string,
+  filter: object = {}
+) => {
+  return await Mongo.collection(collection).find(filter).toArray();
 };

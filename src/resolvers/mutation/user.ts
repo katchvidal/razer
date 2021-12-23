@@ -1,4 +1,8 @@
-import { AssignDocumentID, FindOneElement } from "./../../lib/MongoOperation";
+import {
+  AssignDocumentID,
+  FindOneElement,
+  InserOneElement,
+} from "./../../lib/MongoOperation";
 import { COLLECTIONS } from "../../config/constants";
 import { IResolvers } from "@graphql-tools/utils";
 import JWT from "../../lib/jsonwebtoken";
@@ -29,11 +33,7 @@ const UserMutationResolvers: IResolvers = {
         return {
           message: "All look ok",
           status: true,
-          user: await MongoDB.collection(COLLECTIONS.USERS)
-            .insertOne(input)
-            .then(async () => {
-              return input;
-            }),
+          user: await InserOneElement(MongoDB, COLLECTIONS.USERS, input),
         };
       } catch (error) {
         console.log(error);

@@ -1,3 +1,4 @@
+import { FindElements } from "./../../lib/MongoOperation";
 import { COLLECTIONS, MESSAGE } from "../../config/constants";
 import { IResolvers } from "@graphql-tools/utils";
 import JWT from "../../lib/jsonwebtoken";
@@ -15,9 +16,7 @@ const UserQueryResolvers: IResolvers = {
 
     async users(_, __, { MongoDB }) {
       try {
-        const users = await MongoDB.collection(COLLECTIONS.USERS)
-          .find()
-          .toArray();
+        const users = await FindElements(MongoDB, COLLECTIONS.USERS);
         return {
           status: true,
           message: "All looks ok!",

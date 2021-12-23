@@ -2,7 +2,7 @@ import {
   AssignDocumentID,
   FindOneElement,
   InserOneElement,
-} from "./../../lib/MongoOperation";
+} from "../../lib/MongoOperation";
 import { COLLECTIONS } from "../../config/constants";
 import { IResolvers } from "@graphql-tools/utils";
 import JWT from "../../lib/jsonwebtoken";

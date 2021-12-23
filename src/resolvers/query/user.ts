@@ -1,4 +1,4 @@
-import { FindElements } from "./../../lib/MongoOperation";
+import { FindElements } from "../../lib/MongoOperation";
 import { COLLECTIONS, MESSAGE } from "../../config/constants";
 import { IResolvers } from "@graphql-tools/utils";
 import JWT from "../../lib/jsonwebtoken";

@@ -31,7 +31,7 @@ const UserMutationResolvers: IResolvers = {
         input.password = bcrypt.hashSync(input.password, 10);
 
         return {
-          message: "All look ok",
+          message: "User Create Successfull",
           status: true,
           user: await InserOneElement(MongoDB, COLLECTIONS.USERS, input),
         };

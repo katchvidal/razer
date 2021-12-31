@@ -3,4 +3,6 @@ type Query {
   Hello: String
   users: ResultUsers
   me: ResultUser
+  genres: ResultGenre
+  genre(id: ID!): ResultGenre
 }

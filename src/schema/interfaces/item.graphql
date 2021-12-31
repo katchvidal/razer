@@ -1,0 +1,6 @@
+"Item basic of elements of RAWG API "
+interface Item {
+  id: ID
+  name: String
+  slug: String
+}

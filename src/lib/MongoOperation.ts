@@ -46,7 +46,7 @@ export const InserOneElement = async (
   collection: string,
   element: object
 ) => {
-  return Mongo.collection(collection).insertOne(element);
+  return await Mongo.collection(collection).insertOne(element);
 };
 
 /**

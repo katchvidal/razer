@@ -10,6 +10,7 @@ export const MONGOCDN = process.env.MONGOCDN || "INVALIDSTRINGCONNECTION";
 
 export enum COLLECTIONS {
   USERS = "users",
+  GENRES = "genres",
 }
 
 export enum MESSAGE {

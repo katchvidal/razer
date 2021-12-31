@@ -2,4 +2,5 @@
 type Mutation {
   CreateUser(input: UserInput!): ResultUser
   LoginUser(input: LoginInput): ResultLogin
+  CreateGenre(genre: String): ResultGenre
 }

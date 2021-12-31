@@ -6,17 +6,21 @@ import { Db } from "mongodb";
  * @param collection
  * @returns
  */
-export const AssignDocumentID = async (Mongo: Db, collection: string) => {
+export const AssignDocumentID = async (
+  Mongo: Db,
+  collection: string,
+  sort: any = { create_At: -1 }
+) => {
   const LasElement = await Mongo.collection(collection)
     .find()
     .limit(1)
-    .sort({ create_At: -1 })
+    .sort(sort)
     .toArray();
 
   if (LasElement.length === 0) {
     return 1;
   }
-  return LasElement[0].id + 1;
+  return String(+LasElement[0].id + 1);
 };
 
 /**

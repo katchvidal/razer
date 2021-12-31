@@ -1,6 +1,11 @@
+import { Db } from "mongodb";
 import { IVariables } from "./../interface/variables-data.interfaces";
 import { IContextData } from "./../interface/context-data.interfaces";
-import { FindElements, FindOneElement } from "./../lib/MongoOperation";
+import {
+  FindElements,
+  FindOneElement,
+  InserOneElement,
+} from "./../lib/MongoOperation";
 
 class ResolverOperationService {
   private root: object;
@@ -10,6 +15,13 @@ class ResolverOperationService {
     this.root = root;
     this.variables = variables;
     this.context = context;
+  }
+
+  protected getVariables(): IVariables {
+    return this.variables;
+  }
+  protected getMongoDB(): Db {
+    return this.context.MongoDB;
   }
 
   // List information
@@ -61,6 +73,38 @@ class ResolverOperationService {
   }
 
   // Add Item
+  protected async CreateOne(
+    collection: string,
+    document: object,
+    element: string
+  ) {
+    try {
+      return await InserOneElement(
+        this.context.MongoDB,
+        collection,
+        document
+      ).then((resp) => {
+        if (resp.insertedId.id) {
+          return {
+            status: true,
+            message: `Create succesfull a new One: ${element}`,
+            element: document,
+          };
+        }
+        return {
+          status: false,
+          message: `We cant insert: ${element}`,
+          element: null,
+        };
+      });
+    } catch (error) {
+      return {
+        status: false,
+        message: `Something Went Wrong to Create a New One: ${element}`,
+        element: null,
+      };
+    }
+  }
 
   // Modify Item
 

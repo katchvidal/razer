@@ -82,3 +82,37 @@ export const FindElements = async (
 ) => {
   return await Mongo.collection(collection).find(filter).toArray();
 };
+
+/**
+ *
+ * @param Mongo
+ * @param collection
+ * @param filter
+ * @param objectUpdate
+ * @returns
+ */
+export const UpdateOneElement = async (
+  Mongo: Db,
+  collection: string,
+  filter: object,
+  objectUpdate: object
+) => {
+  return await Mongo.collection(collection).updateOne(filter, {
+    $set: objectUpdate,
+  });
+};
+
+/**
+ *
+ * @param Mongo
+ * @param collection
+ * @param filter
+ * @returns
+ */
+export const DeleteOneElement = async (
+  Mongo: Db,
+  collection: string,
+  filter: object
+) => {
+  return await Mongo.collection(collection).deleteOne(filter);
+};

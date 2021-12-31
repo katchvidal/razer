@@ -5,6 +5,8 @@ import {
   FindElements,
   FindOneElement,
   InserOneElement,
+  UpdateOneElement,
+  DeleteOneElement,
 } from "./../lib/MongoOperation";
 
 class ResolverOperationService {
@@ -107,8 +109,73 @@ class ResolverOperationService {
   }
 
   // Modify Item
+  protected async UpdateOne(
+    collection: string,
+    filter: object,
+    objectUpdate: object,
+    element: string
+  ) {
+    try {
+      return await UpdateOneElement(
+        this.getMongoDB(),
+        collection,
+        filter,
+        objectUpdate
+      ).then((res) => {
+        if (res.modifiedCount === 1) {
+          return {
+            status: true,
+            message: `Update Succesfull ${element}`,
+            element: Object.assign({}, filter, objectUpdate),
+          };
+        }
+
+        return {
+          status: false,
+          message: `Something Went Wrong`,
+          element: null,
+        };
+      });
+    } catch (error) {
+      return {
+        status: false,
+        message: `Something Went Wrong ${error}`,
+        element: null,
+      };
+    }
+  }
 
   // Delete Item
+
+  protected async DeleteOne(
+    collection: string,
+    filter: object,
+    element: string
+  ) {
+    try {
+      return await DeleteOneElement(this.getMongoDB(), collection, filter).then(
+        (res) => {
+          if (res.deletedCount === 1) {
+            return {
+              status: true,
+              message: `The ${element} has been delete succesfull`,
+            };
+          }
+          return {
+            status: false,
+            message: `Something Went Wrong Trying to Delete ${element}`,
+            element: null,
+          };
+        }
+      );
+    } catch (error) {
+      return {
+        status: false,
+        message: `Something Went Wrong ${error}`,
+        element: null,
+      };
+    }
+  }
 }
 
 export default ResolverOperationService;

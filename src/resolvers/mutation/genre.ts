@@ -6,6 +6,14 @@ const GenreMutationResolvers: IResolvers = {
     CreateGenre(_, { genre }, { MongoDB }) {
       return new GenresService(_, { genre }, { MongoDB }).Add();
     },
+
+    UpdateGenre(_, variable, context) {
+      return new GenresService(_, variable, context).Update();
+    },
+
+    DeleteGenre(_, variable, context) {
+      return new GenresService(_, variable, context).Delete();
+    },
   },
 };
 

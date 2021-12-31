@@ -65,8 +65,61 @@ class GenresService extends ResolverOperationService {
   }
 
   // Modify Item "Genres"
+  async Update() {
+    const id = this.getVariables().id;
+    const genre = this.getVariables().genre;
+    if (this.fillValue(String(id) || "")) {
+      return {
+        status: false,
+        message: `The Identifier is Empty`,
+        genre: null,
+      };
+    }
+
+    if (this.fillValue(genre || "")) {
+      return {
+        status: false,
+        message: `The Genre is Empty`,
+        genre: null,
+      };
+    }
+
+    const objectUpdate = {
+      name: genre,
+      slug: slugify(genre || "", { lower: true }),
+    };
+    const result = await this.UpdateOne(
+      this.collection,
+      { id },
+      objectUpdate,
+      "Genre"
+    );
+
+    return {
+      status: result.status,
+      message: result.message,
+      genre: result.element,
+    };
+  }
 
   // Delete Item "Genres"
+  async Delete() {
+    const id = this.getVariables().id;
+    if (this.fillValue(String(id) || "")) {
+      return {
+        status: false,
+        message: `The Identifier is Empty`,
+        genre: null,
+      };
+    }
+    const result = await this.DeleteOne(this.collection, { id }, "Genre");
+
+    return {
+      status: result.status,
+      message: result.message,
+      genre: result.element,
+    };
+  }
 
   //  Funcionalidades
   private fillValue(value: string) {

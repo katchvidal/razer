@@ -3,4 +3,6 @@ type Mutation {
   CreateUser(input: UserInput!): ResultUser
   LoginUser(input: LoginInput): ResultLogin
   CreateGenre(genre: String): ResultGenre
+  UpdateGenre(id: ID, genre: String): ResultGenre
+  DeleteGenre(id: ID): ResultGenre
 }

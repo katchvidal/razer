@@ -95,7 +95,6 @@ class UserService extends ResolverOperationService {
    */
   async Update() {
     const User = this.getVariables().user;
-    console.log(User);
 
     if (User === null || User === undefined || User === "") {
       return {

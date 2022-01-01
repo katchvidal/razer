@@ -38,7 +38,6 @@
     "graphql": "^16.2.0",
     "graphql-import-node": "0.0.4",
     "graphql-playground-middleware-express": "^1.7.23",
-    "graphql-tools": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.2.2",
     "ncp": "^2.0.0",

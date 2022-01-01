@@ -95,7 +95,6 @@ class UserService extends ResolverOperationService {
    */
   async Update() {
     const User = this.getVariables().user;
-
     if (User === null || User === undefined || User === "") {
       return {
         status: false,
@@ -105,7 +104,6 @@ class UserService extends ResolverOperationService {
     }
     const filter = { id: User?.id };
     const result = await this.UpdateOne(this.collection, filter, User!, "User");
-
     return {
       status: result.status,
       message: result.message,

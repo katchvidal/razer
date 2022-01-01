@@ -135,8 +135,8 @@ class ResolverOperationService {
         }
 
         return {
-          status: false,
-          message: `Something Went Wrong`,
+          status: true,
+          message: `Something Went Wrong ${element} hast nothing to Update Verify Again`,
           element: null,
         };
       });

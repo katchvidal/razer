@@ -23,7 +23,11 @@ class ResolverOperationService {
     return this.variables;
   }
   protected getMongoDB(): Db {
-    return this.context.MongoDB;
+    return this.context.MongoDB!;
+  }
+
+  protected getContext(): IContextData {
+    return this.context;
   }
 
   // List information
@@ -31,8 +35,8 @@ class ResolverOperationService {
     try {
       return {
         status: true,
-        message: `List of ${element} below `,
-        items: await FindElements(this.context.MongoDB, collection),
+        message: `List of ${element} Shown below `,
+        items: await FindElements(this.getMongoDB(), collection),
       };
     } catch (error) {
       return {
@@ -48,7 +52,7 @@ class ResolverOperationService {
     // Not information
     try {
       // Status 200
-      return await FindOneElement(this.context.MongoDB, collection, {
+      return await FindOneElement(this.getMongoDB(), collection, {
         id: this.variables.id,
       }).then((result) => {
         if (result) {
@@ -82,7 +86,7 @@ class ResolverOperationService {
   ) {
     try {
       return await InserOneElement(
-        this.context.MongoDB,
+        this.context.MongoDB!,
         collection,
         document
       ).then((resp) => {

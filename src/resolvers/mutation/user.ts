@@ -18,6 +18,10 @@ const UserMutationResolvers: IResolvers = {
     async DeleteUser(_, { id }, contexto) {
       return new UserService(_, { id }, contexto).Delete();
     },
+
+    async BlockUser(_, { id }, contexto) {
+      return new UserService(_, { id }, contexto).Block();
+    },
   },
 };
 

@@ -36,14 +36,16 @@ class ResolverOperationService {
     collection: string,
     element: string,
     page: number = 1,
-    items: number = 20
+    items: number = 20,
+    filter: object = { active: { $ne: false } }
   ) {
     try {
       const paginationdata = await pagination(
         this.getMongoDB(),
         collection,
         page,
-        items
+        items,
+        filter
       );
 
       return {
@@ -52,7 +54,7 @@ class ResolverOperationService {
         items: await FindElements(
           this.getMongoDB(),
           collection,
-          {},
+          filter,
           paginationdata
         ),
         pagination: {

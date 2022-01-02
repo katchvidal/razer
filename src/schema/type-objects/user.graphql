@@ -8,4 +8,5 @@ type User {
   create_At: String
   birthday: String
   role: Rol
+  active: Boolean
 }

@@ -139,6 +139,10 @@ export const DeleteOneElement = async (
  * @param collection
  * @returns
  */
-export const CountElements = async (database: Db, collection: string) => {
-  return await database.collection(collection).countDocuments();
+export const CountElements = async (
+  database: Db,
+  collection: string,
+  filter: object = {}
+) => {
+  return await database.collection(collection).countDocuments(filter);
 };

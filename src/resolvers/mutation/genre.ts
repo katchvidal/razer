@@ -14,6 +14,10 @@ const GenreMutationResolvers: IResolvers = {
     DeleteGenre(_, variable, context) {
       return new GenresService(_, variable, context).Delete();
     },
+
+    BlockGenre(_, { id }, context) {
+      return new GenresService(_, { id }, context).Block();
+    },
   },
 };
 

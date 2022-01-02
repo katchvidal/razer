@@ -16,6 +16,8 @@ class GenresService extends ResolverOperationService {
     const page = this.getVariables().pagination?.page;
     const items = this.getVariables().pagination?.items;
     const result = await this.List(this.collection, "Genres", page, items);
+    console.log(result);
+
     return {
       status: result.status,
       message: result.message,
@@ -27,6 +29,7 @@ class GenresService extends ResolverOperationService {
   // Get Details "Genres"
   async item() {
     const result = await this.GetOne(this.collection, "Genre");
+
     return {
       status: result.status,
       message: result.message,
@@ -120,6 +123,38 @@ class GenresService extends ResolverOperationService {
     return {
       status: result.status,
       message: result.message,
+      genre: result.element,
+    };
+  }
+
+  // Block "Genre"
+  async Block() {
+    const id = this.getVariables().id;
+
+    if (this.fillValue(String(id))) {
+      return {
+        status: false,
+        message: `The identifier has empty`,
+        genre: null,
+      };
+    }
+
+    const objectUpdate = {
+      active: false,
+    };
+
+    const result = await this.UpdateOne(
+      this.collection,
+      { id },
+      objectUpdate,
+      "Genre"
+    );
+
+    return {
+      status: result.status,
+      message: result.message
+        ? "Block Active Succesfull"
+        : "Something Went Wrong try again",
       genre: result.element,
     };
   }

@@ -16,7 +16,8 @@ export async function pagination(
   MongoDB: Db,
   collection: string,
   page: number = 1,
-  items: number = 20
+  items: number = 20,
+  filter: object = {}
 ) {
   // Check the number of items per page
   if (items < 1 || items > 20) {
@@ -25,7 +26,7 @@ export async function pagination(
   if (page < 1) {
     page = 1;
   }
-  const total = await CountElements(MongoDB, collection);
+  const total = await CountElements(MongoDB, collection, filter);
   const pages = Math.ceil(total / items);
   return {
     page,

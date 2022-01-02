@@ -7,7 +7,8 @@ type ResultUser implements Result {
 
 "Resultado que devuelve [User]"
 type ResultUsers implements Result {
-  users: [User]
   status: Boolean!
   message: String!
+  users: [User]
+  info: ResultInfo
 }

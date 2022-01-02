@@ -6,6 +6,12 @@ _Made With TypeGraph (Graphql, TypeScript & Node JS)_
 ## Starting 🚀
 
 _You will need to install the node modules """npm install"""._
+\_You will need to create a enviroment .ENV with
+
+- MONGOCDN=
+- SECRETORPRIVATEKEY=
+- PORT=
+  .\_
 
 Look **Deployment** You will.
 

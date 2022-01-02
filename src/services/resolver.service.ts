@@ -8,6 +8,7 @@ import {
   UpdateOneElement,
   DeleteOneElement,
 } from "./../lib/MongoOperation";
+import { pagination } from "../lib/pagination";
 
 class ResolverOperationService {
   private root: object;
@@ -31,12 +32,36 @@ class ResolverOperationService {
   }
 
   // List information
-  protected async List(collection: string, element: string) {
+  protected async List(
+    collection: string,
+    element: string,
+    page: number = 1,
+    items: number = 20
+  ) {
     try {
+      const paginationdata = await pagination(
+        this.getMongoDB(),
+        collection,
+        page,
+        items
+      );
+
       return {
         status: true,
         message: `List of ${element} Shown below `,
-        items: await FindElements(this.getMongoDB(), collection),
+        items: await FindElements(
+          this.getMongoDB(),
+          collection,
+          {},
+          paginationdata
+        ),
+        pagination: {
+          page: paginationdata.page,
+          pages: paginationdata.pages,
+          items: paginationdata.items,
+          total: paginationdata.total,
+          skip: paginationdata.skip,
+        },
       };
     } catch (error) {
       return {

@@ -1,8 +1,4 @@
-import {
-  FindOneElement,
-  AssignDocumentID,
-  InserOneElement,
-} from "./../lib/MongoOperation";
+import { FindOneElement, AssignDocumentID } from "./../lib/MongoOperation";
 import { COLLECTIONS, MESSAGE } from "./../config/constants";
 import { IContextData } from "./../interface/context-data.interfaces";
 import ResolverOperationService from "./resolver.service";

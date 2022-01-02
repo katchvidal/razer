@@ -3,8 +3,12 @@ import GenresService from "../../services/genre.service";
 
 const GenreQueryResolvers: IResolvers = {
   Query: {
-    async genres(_, __, { MongoDB }) {
-      return new GenresService(_, __, { MongoDB }).items();
+    async genres(_, { page, items }, { MongoDB }) {
+      return new GenresService(
+        _,
+        { pagination: { page, items } },
+        { MongoDB }
+      ).items();
     },
 
     async genre(_, { id }, { MongoDB }) {

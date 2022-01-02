@@ -1,0 +1,12 @@
+type ResultInfo {
+  # Pagina Seleccionada
+  page: Int
+  # Numero de Documentos por pagina
+  items: Int
+  # Total de Documentos
+  total: Int
+  # Paginas
+  pages: Int
+  # Skip
+  skip: Int
+}

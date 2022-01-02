@@ -1,6 +1,15 @@
 "Mutation"
 type Mutation {
   CreateUser(input: UserInput!): ResultUser
+<<<<<<< HEAD
   LoginUser(input: LoginInput): ResultLogin
   CreateGenre(input: GenreInput): ResultGenre
+=======
+  UpdateUser(input: UserInput): ResultUser
+  DeleteUser(id: ID): ResultUser
+  LoginUser(email: String, password: String): ResultLogin
+  CreateGenre(genre: String): ResultGenre
+  UpdateGenre(id: ID, genre: String): ResultGenre
+  DeleteGenre(id: ID): ResultGenre
+>>>>>>> main
 }

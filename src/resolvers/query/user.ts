@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 import { FindElements } from "../../lib/MongoOperation";
+=======
+>>>>>>> main
 import { COLLECTIONS, MESSAGE } from "../../config/constants";
 import { IResolvers } from "@graphql-tools/utils";
 import JWT from "../../lib/jsonwebtoken";
+import UserService from "../../services/user.service";
 
 const UserQueryResolvers: IResolvers = {
   Query: {
@@ -14,40 +18,12 @@ const UserQueryResolvers: IResolvers = {
       return "Hello World";
     },
 
-    async users(_, __, { MongoDB }) {
-      try {
-        const users = await FindElements(MongoDB, COLLECTIONS.USERS);
-        return {
-          status: true,
-          message: "All looks ok!",
-          users,
-        };
-      } catch (error) {
-        console.log(error);
-        return {
-          status: false,
-          message: "Warning something went wrong",
-          users: [],
-        };
-      }
+    async users(_, __, context) {
+      return new UserService(_, __, context).items();
     },
 
     async me(_, __, { token }) {
-      //console.log(token);
-
-      let info = new JWT().verify(token);
-      if (info === MESSAGE.TOKEN_VERIFICATION_FAILED) {
-        return {
-          message: info,
-          status: true,
-          user: null,
-        };
-      }
-      return {
-        message: "User Verified Correctly",
-        status: true,
-        user: Object.values(info)[0],
-      };
+      return new UserService(_, __, { token }).auth();
     },
   },
 };

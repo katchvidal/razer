@@ -6,17 +6,21 @@ import { Db } from "mongodb";
  * @param collection
  * @returns
  */
-export const AssignDocumentID = async (Mongo: Db, collection: string) => {
+export const AssignDocumentID = async (
+  Mongo: Db,
+  collection: string,
+  sort: any = { create_At: -1 }
+) => {
   const LasElement = await Mongo.collection(collection)
     .find()
     .limit(1)
-    .sort({ create_At: -1 })
+    .sort(sort)
     .toArray();
 
   if (LasElement.length === 0) {
     return 1;
   }
-  return LasElement[0].id + 1;
+  return String(+LasElement[0].id + 1);
 };
 
 /**
@@ -46,7 +50,7 @@ export const InserOneElement = async (
   collection: string,
   element: object
 ) => {
-  return Mongo.collection(collection).insertOne(element);
+  return await Mongo.collection(collection).insertOne(element);
 };
 
 /**
@@ -77,4 +81,38 @@ export const FindElements = async (
   filter: object = {}
 ) => {
   return await Mongo.collection(collection).find(filter).toArray();
+};
+
+/**
+ *
+ * @param Mongo
+ * @param collection
+ * @param filter
+ * @param objectUpdate
+ * @returns
+ */
+export const UpdateOneElement = async (
+  Mongo: Db,
+  collection: string,
+  filter: object,
+  objectUpdate: object
+) => {
+  return await Mongo.collection(collection).updateOne(filter, {
+    $set: objectUpdate,
+  });
+};
+
+/**
+ *
+ * @param Mongo
+ * @param collection
+ * @param filter
+ * @returns
+ */
+export const DeleteOneElement = async (
+  Mongo: Db,
+  collection: string,
+  filter: object
+) => {
+  return await Mongo.collection(collection).deleteOne(filter);
 };

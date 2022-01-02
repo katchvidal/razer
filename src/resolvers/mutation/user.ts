@@ -1,95 +1,31 @@
+<<<<<<< HEAD
 import {
   AssignDocumentID,
   FindOneElement,
   InserOneElement,
 } from "../../lib/MongoOperation";
 import { COLLECTIONS } from "../../config/constants";
+=======
+>>>>>>> main
 import { IResolvers } from "@graphql-tools/utils";
-import JWT from "../../lib/jsonwebtoken";
-import bcrypt from "bcrypt";
+import UserService from "../../services/user.service";
 
 const UserMutationResolvers: IResolvers = {
   Mutation: {
-    async CreateUser(_, { input }, { MongoDB }) {
-      try {
-        const UserExist = await FindOneElement(MongoDB, COLLECTIONS.USERS, {
-          email: input.email,
-        });
-
-        if (UserExist) {
-          return {
-            message: `${input.email} has already taken`,
-            status: true,
-            input: null,
-          };
-        }
-
-        input.id = await AssignDocumentID(MongoDB, COLLECTIONS.USERS);
-
-        input.create_At = new Date().toISOString();
-
-        input.password = bcrypt.hashSync(input.password, 10);
-
-        return {
-          message: "All look ok",
-          status: true,
-          user: await InserOneElement(MongoDB, COLLECTIONS.USERS, input),
-        };
-      } catch (error) {
-        console.log(error);
-        return {
-          status: false,
-          message: "Warning Something Went Wrong",
-          user: null,
-        };
-      }
+    async CreateUser(_, { input }, contexto) {
+      return new UserService(_, { user: input }, contexto).Add();
     },
 
-    async LoginUser(_, { input }, { MongoDB }) {
-      const { email } = input;
-      try {
-        const user = await MongoDB.collection(COLLECTIONS.USERS).findOne({
-          email: input.email,
-        });
+    async LoginUser(_, { email, password }, context) {
+      return new UserService(_, { user: { email, password } }, context).Login();
+    },
 
-        /* const user = await FindOneElement(MongoDB, COLLECTIONS.USERS, {
-          email,
-        });*/
+    async UpdateUser(_, { input }, contexto) {
+      return new UserService(_, { user: input }, contexto).Update();
+    },
 
-        if (!user) {
-          return {
-            status: true,
-            message: "Password / Email not valid",
-            token: null,
-            user: null,
-          };
-        }
-
-        const PasswordValid = bcrypt.compareSync(input.password, user.password);
-
-        if (PasswordValid) {
-          delete user.password;
-          delete user.birthday;
-          delete user.create_At;
-          delete user.role;
-        }
-
-        return {
-          status: true,
-          message: PasswordValid ? "ALL LOOK OK" : "Password / Email not valid",
-          user: PasswordValid ? user : null,
-          token: PasswordValid ? new JWT().sign({ user }) : null,
-        };
-        user;
-      } catch (error) {
-        console.log(error);
-        return {
-          status: false,
-          message: "Warning Something Went Wrong Contact to Admin",
-          user: null,
-          token: null,
-        };
-      }
+    async DeleteUser(_, { id }, contexto) {
+      return new UserService(_, { id }, contexto).Delete();
     },
   },
 };

@@ -1,0 +1,6 @@
+"Type object for Genre of VideoGame"
+type Genre implements Item {
+  id: ID
+  name: String
+  slug: String
+}

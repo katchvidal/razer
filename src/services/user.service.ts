@@ -234,6 +234,37 @@ class UserService extends ResolverOperationService {
     };
   }
 
+  // UnBlock User
+  async Unblock(unblock: boolean) {
+    const id = this.getVariables().id;
+
+    if (this.fillValue(String(id))) {
+      return {
+        status: false,
+        message: `The identifier has empty`,
+        user: null,
+      };
+    }
+
+    const objectUpdate = {
+      active: unblock,
+    };
+
+    const result = await this.UpdateOne(
+      this.collection,
+      { id },
+      objectUpdate,
+      "User"
+    );
+
+    const action = unblock ? "Unblock Succesfull" : "Block Succesfull";
+    return {
+      status: result.status,
+      message: result.message ? `${action}` : "Something Went Wrong try again",
+      user: result.element,
+    };
+  }
+
   //  Funcionalidades
   private fillValue(value: string) {
     return value === "" || value === undefined ? true : false;

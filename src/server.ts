@@ -13,7 +13,7 @@ import chalk from "chalk";
 //  Configuracion de las Variables de Entorno
 if (process.env.NODE_ENV !== "production") {
   const env = enviroment;
-  console.log(env);
+  //console.log(env);
 }
 
 async function init() {
@@ -48,7 +48,8 @@ async function init() {
       port: PORT,
     },
     () => {
-      console.log("================SERVER================");
+      console.log("================SERVER API GRAPHQL================");
+      console.log(`STATUS: ${chalk.greenBright("ONLINE")}`);
       console.log(
         `WORKING AT: ${chalk.greenBright(`http://localhost:${PORT}/graphql`)}`
       );

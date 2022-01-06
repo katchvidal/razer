@@ -8,5 +8,5 @@ input UserInput {
   birthday: String
   role: Rol = CLIENT
   id: ID
-  active: Boolean = false
+  active: Boolean = true
 }

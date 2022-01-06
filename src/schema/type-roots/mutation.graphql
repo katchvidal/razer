@@ -1,5 +1,6 @@
 "Mutation"
 type Mutation {
+  # User Mutation
   CreateUser(input: UserInput!): ResultUser
   UpdateUser(input: UserInput): ResultUser
   DeleteUser(id: ID): ResultUser
@@ -13,4 +14,6 @@ type Mutation {
   SendEmail(mail: MailInput!): ResultMail
   ActiveUserEmail(id: ID!, email: String!): ResultMail
   ActiveUserActionEmail(id: ID, birthday: String, password: String): ResultMail
+  ResetUserPassword(email: String!): ResultMail
+  ResetUserPasswordAction(password: String!, id: ID!): ResultMail
 }

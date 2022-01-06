@@ -1,9 +1,11 @@
 import { FindOneElement, AssignDocumentID } from "./../lib/MongoOperation";
-import { COLLECTIONS, MESSAGE } from "./../config/constants";
+import { COLLECTIONS, EXPIRETIME, MESSAGE } from "./../config/constants";
 import { IContextData } from "./../interface/context-data.interfaces";
 import ResolverOperationService from "./resolver.service";
 import JsonWebToken from "../lib/jsonwebtoken";
 import bcrypt from "bcrypt";
+import JWT from "../lib/jsonwebtoken";
+import MailService from "./email.service";
 
 class UserService extends ResolverOperationService {
   collection = COLLECTIONS.USERS;
@@ -202,7 +204,10 @@ class UserService extends ResolverOperationService {
     };
   }
 
-  // Block "User"
+  /**
+   * @requires ID
+   * @returns Block User
+   */
   async Block() {
     const id = this.getVariables().id;
 
@@ -234,9 +239,15 @@ class UserService extends ResolverOperationService {
     };
   }
 
-  // UnBlock User
+  /**
+   *
+   * @param unblock
+   * @returns User Unblocked
+   */
   async Unblock(unblock: boolean) {
     const id = this.getVariables().id;
+    const birthday = this.getVariables();
+    console.log(birthday);
 
     if (this.fillValue(String(id))) {
       return {
@@ -256,6 +267,7 @@ class UserService extends ResolverOperationService {
       objectUpdate,
       "User"
     );
+    console.log(result);
 
     const action = unblock ? "Unblock Succesfull" : "Block Succesfull";
     return {
@@ -263,6 +275,30 @@ class UserService extends ResolverOperationService {
       message: result.message ? `${action}` : "Something Went Wrong try again",
       user: result.element,
     };
+  }
+
+  /**
+   * @requires ID
+   * @requires EMAIL
+   * @returns Email to User to Verify it Account
+   */
+  async Active() {
+    const id = this.getVariables().user?.id;
+    const email = this.getVariables().user?.email;
+    if (email === undefined || email === "") {
+      return {
+        status: false,
+        message: "Email is Empty ",
+      };
+    }
+    const token = new JWT().sign({ user: { id, email } }, EXPIRETIME.H1);
+    const html = `Active User Account Click Here: <a href="${process.env.CLIENT_URL}/active/${token}">Click Here </a>`;
+    const mail = {
+      to: email,
+      subject: "Activate User Account",
+      html,
+    };
+    return new MailService().sent(mail);
   }
 
   //  Funcionalidades

@@ -63,7 +63,7 @@ class UserService extends ResolverOperationService {
     ) {
       return {
         message: `Password has empty please give one`,
-        status: true,
+        status: false,
         user: null,
       };
     }
@@ -73,7 +73,7 @@ class UserService extends ResolverOperationService {
     if (UserExist) {
       return {
         message: `${user?.email} has already taken`,
-        status: true,
+        status: false,
         user: null,
       };
     }

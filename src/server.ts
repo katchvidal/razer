@@ -26,7 +26,6 @@ async function init() {
 
   const context = async ({ req, connection }: IContext) => {
     const token = req ? req.headers.authorization : connection.authorization;
-
     return { token, MongoDB };
   };
 

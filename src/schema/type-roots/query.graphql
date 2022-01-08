@@ -3,6 +3,7 @@ type Query {
   Hello: String
   users(page: Int = 1, items: Int = 20): ResultUsers
   me: ResultUser
-  genres(page: Int = 1, items: Int = 20): ResultGenre
   genre(id: ID!): ResultGenre
+  genres(page: Int = 1, items: Int = 20): ResultGenre
+  platforms(page: Int = 1, items: Int = 20): ResultPlaform
 }

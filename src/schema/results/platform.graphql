@@ -1,0 +1,7 @@
+type ResultPlaform implements Result {
+  status: Boolean!
+  message: String!
+  platform: Platform
+  platforms: [Platform]
+  info: ResultInfo
+}

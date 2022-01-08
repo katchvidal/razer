@@ -1,0 +1,7 @@
+"Input Mail Field Requirement"
+input MailInput {
+  from: String
+  to: String
+  subject: String
+  html: String
+}

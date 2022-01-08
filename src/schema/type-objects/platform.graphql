@@ -1,0 +1,5 @@
+type Platform {
+  id: ID
+  name: String
+  slug: String
+}

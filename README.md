@@ -5,14 +5,14 @@ _Made With TypeGraph (Graphql, TypeScript & Node JS)_
 
 ## Starting 🚀
 
-_POSTMAN DOCS: https://web.postman.co/workspace/727c61fc-ebb8-46bf-8d67-a46067b04d10/documentation/15533483-ee76b6cb-2e9b-4593-86f4-c071d537a907 ._
-_You will need to install the node modules """npm install"""._
-\_You will need to create a enviroment .ENV with
+_POSTMAN DOCS: https://documenter.getpostman.com/view/15533483/UVXerxht._
+
+_You will need to install the node modules """npm install"""
+You will need to create a enviroment .ENV with -_
 
 - MONGOCDN=
 - SECRETORPRIVATEKEY=
 - PORT=
-  .\_
 
 Look **Deployment** You will.
 

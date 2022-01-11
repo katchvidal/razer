@@ -14,12 +14,10 @@ const UserQueryResolvers: IResolvers = {
       return "Hello World";
     },
 
-    async users(_, { page, items }, context) {
-      return new UserService(
-        _,
-        { pagination: { page, items } },
-        context
-      ).items();
+    async users(_, { page, items, active }, context) {
+      return new UserService(_, { pagination: { page, items } }, context).items(
+        active
+      );
     },
 
     async me(_, __, { token }) {

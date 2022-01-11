@@ -1,5 +1,10 @@
 import { FindOneElement, AssignDocumentID } from "./../lib/MongoOperation";
-import { COLLECTIONS, EXPIRETIME, MESSAGE } from "./../config/constants";
+import {
+  ACTIVE_VALUES_FILTERS,
+  COLLECTIONS,
+  EXPIRETIME,
+  MESSAGE,
+} from "./../config/constants";
 import { IContextData } from "./../interface/context-data.interfaces";
 import ResolverOperationService from "./resolver.service";
 import JsonWebToken from "../lib/jsonwebtoken";
@@ -21,10 +26,22 @@ class UserService extends ResolverOperationService {
    * @requires Database
    * @returns
    */
-  async items() {
+  async items(active: string = ACTIVE_VALUES_FILTERS.ACTIVE) {
+    let filter: object = { active: { $ne: false } };
+    if (active === ACTIVE_VALUES_FILTERS.ALL) {
+      filter = {};
+    } else if (active === ACTIVE_VALUES_FILTERS.INACTIVE) {
+      filter = { active: false };
+    }
     const page = this.getVariables().pagination?.page;
     const items = this.getVariables().pagination?.items;
-    const result = await this.List(this.collection, "Users", page, items);
+    const result = await this.List(
+      this.collection,
+      "Users",
+      page,
+      items,
+      filter
+    );
     return {
       status: result.status,
       message: result.message,

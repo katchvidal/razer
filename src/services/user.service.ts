@@ -113,10 +113,10 @@ class UserService extends ResolverOperationService {
    */
   async Update() {
     const User = this.getVariables().user;
-    if (User === null || User === undefined || User === "") {
+    if (User === null) {
       return {
         status: false,
-        message: "User its undefined",
+        message: "User its not defined",
         user: null,
       };
     }

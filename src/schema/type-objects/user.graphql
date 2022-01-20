@@ -9,4 +9,5 @@ type User {
   birthday: String
   role: Rol
   active: Boolean
+  stripeCustomer: ID
 }

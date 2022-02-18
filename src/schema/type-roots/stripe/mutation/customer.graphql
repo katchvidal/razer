@@ -1,0 +1,5 @@
+type Mutation {
+  CreateCustomer(email: String!, name: String!): ResultStripeCustomer
+  UpdateCustomer(id: ID!, input: CustomerInput): ResultStripeCustomer
+  DeleteCustomer(id: ID!): ResultStripeCustomer
+}
